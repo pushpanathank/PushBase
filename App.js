@@ -6,6 +6,10 @@ import { Provider } from 'react-redux';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 
+import { StyleProvider } from 'native-base';
+import getTheme from './app/theme/components';
+import material from './app/theme/variables/material';
+
 // Imports: Navigation
 import ReduxNavigation from './app/navigation/ReduxNavigation';
 
@@ -44,7 +48,9 @@ export default class App extends React.Component {
           loading={<AppLoading />}
           persistor={persistor}
         >
-          <ReduxNavigation />
+          <StyleProvider style={getTheme(custom)}>
+            <ReduxNavigation />
+          </StyleProvider>
         </PersistGate>
       </Provider>
     );
