@@ -1,0 +1,35 @@
+// Initial State
+import { initialState } from './initial';
+
+// Reducers (Modifies The State And Returns A New State)
+const counter = (state = initialState, action) => {
+  switch (action.type) {
+    // Increase Counter
+    case 'INCREASE_COUNTER': {
+      return {
+        // State
+        ...state,
+        // Redux Store
+        counter: state.counter + 1,
+      }
+    }
+
+    // Decrease Counter
+    case 'DECREASE_COUNTER': {
+      return {
+        // State
+        ...state,
+        // Redux Store
+        counter: state.counter - 1,
+      }
+    }
+
+    // Default
+    default: {
+      return state;
+    }
+  }
+};
+
+// Exports
+export default counter;
