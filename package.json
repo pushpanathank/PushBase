@@ -8,12 +8,15 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "expo": "^33.0.0",
+    "expo-constants": "^6.0.0",
     "expo-font": "^6.0.1",
     "native-base": "^2.13.4",
     "react": "16.8.3",
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
+    "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-web": "^0.11.4",
     "react-navigation": "^3.11.1",
     "react-navigation-redux-helpers": "^3.0.2",

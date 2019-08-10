@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, ImageBackground, Image} from 'react-native'
 import _ from 'lodash'; 
 import { Layout, Colors } from '../../constants';
-import { Logo, Statusbar } from '../../components';
+import { Logo, Statusbar, LoginBackIcon } from '../../components';
 import imgs from '../../assets/images';
 import {
   Container,
@@ -22,7 +22,7 @@ import * as userActions from "../../actions/user";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
-class Login extends React.Component {
+class Forgotpassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,12 +36,12 @@ class Login extends React.Component {
     this.login();
   }
 
-  onSignupButtonPressHandler(){
-    this.props.navigation.navigate('signupScreen')
+  onSigninButtonPressHandler(){
+    this.props.navigation.navigate('signinScreen')
   }
 
-  onForgotpasswordPressHandler(){
-    this.props.navigation.navigate('forgotpasswordScreen')
+  onSignupButtonPressHandler(){
+    this.props.navigation.navigate('signupScreen')
   }
 
   login(){
@@ -85,9 +85,9 @@ class Login extends React.Component {
           <KeyboardAwareScrollView>
             <View style={{flexDirection: 'column', flex:1}}>
               <View style={{flex: 0.8,height: Layout.window.height-80,}}>
-                <View style={appStyles.rowXcenter}>
-                  <Logo style={appStyles.loginLogo} />
-                  <Text style={appStyles.loginMidText}>Login to Get Started!</Text>
+                <View style={appStyles.row}>
+                  <LoginBackIcon props={this.props} /> 
+                  <Text style={appStyles.loginTitle}>Forgot Password</Text>
                 </View> 
 
                 <View style={styles.loginBox}>
@@ -107,39 +107,7 @@ class Login extends React.Component {
                           autoCorrect={false}
                         />
                       </Item>
-                      <Item style={styles.itemStyle} floatingLabel >
-                        <Input
-                          placeholder="Password"
-                          placeholderTextColor="#FFFFFF"
-                          autoCapitalize="none"
-                          style={appStyles.textbox}
-                          maxLength={30}
-                          numberOfLines={1}
-                          secureTextEntry={true}
-                          onChangeText={ (password)=> this.setState({password}) }
-                          spellCheck={false}
-                          autoCorrect={false}
-                        />
-                      </Item>
                   </Form>
-                  <Row>
-                    <Col>
-                      <Button transparent full  
-                        onPress={() => this.onSignupButtonPressHandler()}
-                        style={{justifyContent:'flex-start'}}
-                      >
-                        <Text style={[styles.linkText,appStyles.textLeft]} > Create Account </Text>
-                      </Button> 
-                    </Col>
-                    <Col>
-                      <Button transparent full  
-                        onPress={() => this.onForgotpasswordPressHandler()}
-                        style={{justifyContent:'flex-end'}}
-                      >
-                        <Text style={[styles.linkText,appStyles.textRight]} > Forgot Password </Text>
-                      </Button>
-                    </Col>
-                  </Row>
                 </View>
               </View>  
               <View style={{flex: 0.2,height: 80,}}> 
@@ -151,7 +119,7 @@ class Login extends React.Component {
                       style={styles.button}
                       onPress={() => this.onSubmit()}
                     >
-                      <Text> Log in</Text>
+                      <Text> Reset </Text>
                     </Button>
                 }
               </View>  
@@ -186,4 +154,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Forgotpassword);

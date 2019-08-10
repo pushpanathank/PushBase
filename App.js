@@ -1,10 +1,16 @@
 // Imports: Dependencies
 import React from 'react';
+import { View, Text, Image } from 'react-native';
 import { PersistGate } from 'redux-persist/es/integration/react'
 import { Provider } from 'react-redux';
 
-import { AppLoading } from 'expo';
+import { Font, AppLoading } from 'expo';
+// import * as Font from 'expo-font';
+
+/*import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
+import { Asset } from 'expo-asset';*/
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 
 import { StyleProvider } from 'native-base';
 import getTheme from './app/theme/components';
@@ -15,6 +21,21 @@ import ReduxNavigation from './app/navigation/ReduxNavigation';
 
 // Imports: Redux Persist Persister
 import { store, persistor } from './app/store/store';
+
+
+function cacheImages(images) {
+  return images.map(image => {
+    if (typeof image === 'string') {
+      return Image.prefetch(image);
+    } else {
+      return Asset.fromModule(image).downloadAsync();
+    }
+  });
+}
+
+function cacheFonts(fonts) {
+  return fonts.map(font => Font.loadAsync(font));
+}
 
 // React Native: App
 export default class App extends React.Component {
@@ -27,19 +48,21 @@ export default class App extends React.Component {
 
   async componentWillMount() {
     await Font.loadAsync({
-      'Roboto': require('native-base/Fonts/Roboto.ttf'),
-      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-      'Ionicons': require('native-base/Fonts/Ionicons.ttf'),
-      // 'OpenSans-Light': require('./assets/fonts/OpenSans-Light.ttf'),
-      // 'OpenSans-Regular': require('./assets/fonts/OpenSans-Regular.ttf'),
-      // 'OpenSans-Semibold': require('./assets/fonts/OpenSans-Semibold.ttf'),
+      // 'Ionicons': require('native-base/Fonts/Ionicons.ttf'),
+      ...Ionicons.font,
+      'Font-Light': require('./app/assets/fonts/Montserrat-Light.ttf'),
+      'Font-Regular': require('./app/assets/fonts/Montserrat-Regular.ttf'),
+      'Font-Semibold': require('./app/assets/fonts/Montserrat-SemiBold.ttf'),
+      'Font-Bold': require('./app/assets/fonts/Montserrat-Bold.ttf'),
     });
     this.setState({isReady: true});
   }
 
   render() {
     if (!this.state.isReady) {
-      return <AppLoading />;
+      return (
+        <AppLoading />
+      );
     }
     return (
       // Redux: Global Store
@@ -48,7 +71,7 @@ export default class App extends React.Component {
           loading={<AppLoading />}
           persistor={persistor}
         >
-          <StyleProvider style={getTheme(custom)}>
+          <StyleProvider style={getTheme(material)}>
             <ReduxNavigation />
           </StyleProvider>
         </PersistGate>
