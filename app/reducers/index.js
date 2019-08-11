@@ -1,11 +1,11 @@
 // Imports: Reducers
 import auth from './auth';
-import counter from './counter';
+import common from './common';
 
 // Redux: Root Reducer
 const rootReducer = {
-  authReducer: auth,
-  counterReducer: counter,
+  auth: auth,
+  common: common,
 };
 
 // Exports

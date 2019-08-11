@@ -8,21 +8,21 @@ import {
   Container,
   Content,
   Icon,
-  Spinner,
-  Button,
-  Text
+  Spinner
 } from 'native-base';
 import { connect } from "react-redux";
-import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
-class Home extends React.Component {
+class Authenticate extends React.Component {
   constructor(props) {
     super(props);
   }
-  logout(){
-    this.props.logout();
-    this.props.navigation.navigate('loginStack')
+  componentDidMount() {
+    if(this.props.user==null){
+      this.props.navigation.navigate('signinScreen');
+    }else{
+      this.props.navigation.navigate('homeStack');
+    }
   }
   render(){
     return (
@@ -35,12 +35,7 @@ class Home extends React.Component {
               <View style={{flex: 1,height: Layout.window.height,}}>
                 <View style={appStyles.rowXcenter}>
                   <Logo style={[appStyles.loginLogo,{paddingTop:Layout.sixIndent}]} />
-                  <Button  
-                    onPress={() => this.logout()}
-                    style={[styles.linkTextBtn]}
-                  >
-                    <Text style={[styles.linkText]} > Logout </Text>
-                  </Button>
+                  <Spinner color={Colors.secondary} />
                 </View> 
               </View>  
             </View>  
@@ -59,11 +54,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   // Action
-  return {
-      // Login
-      logout: () => dispatch(userActions.logoutUser()),
-   };
+    return {};
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Authenticate);

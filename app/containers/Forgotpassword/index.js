@@ -82,7 +82,7 @@ class Forgotpassword extends React.Component {
         <ImageBackground 
             source={imgs.bg} 
             style={ { width: Layout.window.width, height: Layout.window.height }}>
-          <KeyboardAwareScrollView>
+          <Content enableOnAndroid>
             <View style={{flexDirection: 'column', flex:1}}>
               <View style={{flex: 0.8,height: Layout.window.height-80,}}>
                 <View style={appStyles.row}>
@@ -124,7 +124,7 @@ class Forgotpassword extends React.Component {
                 }
               </View>  
             </View>          
-          </KeyboardAwareScrollView>
+          </Content>
          </ImageBackground>
       </Container>
      
@@ -137,7 +137,7 @@ const mapStateToProps = (state) => {
 
   // Redux Store --> Component
   return {
-    loggedIn: state.authReducer.loggedIn,
+    loggedIn: state.auth.loggedIn,
   };
 };
 

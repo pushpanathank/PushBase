@@ -3,23 +3,12 @@ import { initialState } from './initial';
 import { ActionTypes } from '../constants/';
 
 // Reducers (Modifies The State And Returns A New State)
-const auth = (state = initialState, action) => {
+const common = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.SIGNIN: {
+    case ActionTypes.LOADING: {
       return {
         ...state,
-        user: action.data
-      }
-    }
-    case ActionTypes.SIGNUP: {
-      return {
-        ...state,
-      }
-    }
-    case ActionTypes.LOGOUT: {
-      return {
-        ...state,
-        user: null
+        isLoading: action.isLoading,
       }
     }
     // Default
@@ -30,4 +19,4 @@ const auth = (state = initialState, action) => {
 };
 
 // Exports
-export default auth;
+export default common;

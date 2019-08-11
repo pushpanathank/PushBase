@@ -12,60 +12,50 @@ import {
   Button,
   Form,
   Item,
-  Label,
   Input,
-  Spinner, Row, Col
+  Spinner, Row, Col, Toast
 } from 'native-base';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as userActions from "../../actions/user";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {showToast} from '../../utils/common';
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: '',
       username: '',
       password: '',
       error: '',
     };
   }
 
-  onSubmit(){
-    this.login();
-  }
-
   onSigninButtonPressHandler(){
     this.props.navigation.navigate('signinScreen')
   }
 
-  login(){
+  signup(){
     const user = {
-      username: this.state.username,
+      name: this.state.name,
+      email: this.state.username,
       password: this.state.password,
     }
-    this.setState({
-      isLoading: true,
-    })
-    this.props.authenticate(user)
+    this.props.signup(user)
       .then(res => {
         if(res.status == 200){
-          this.props.navigation.navigate('homeStack')
+          showToast(res.msg,"success");
+          this.props.navigation.navigate('signinScreen')
         }else{
-          this.setState({
-            isLoading: false,
-          })     
+          showToast(res.msg,"danger");
         }
       })
       .catch(error => {
         const messages = _.get(error, 'response.data.error')
         message = (_.values(messages) || []).join(',')
         if (message){
-         this.setState({
-           error: message,
-           isLoading: false,
-         })
+          showToast(message,"danger");
        }
        console.log(`
           Error messages returned from server:`, messages )
@@ -78,7 +68,7 @@ class Register extends React.Component {
         <ImageBackground 
             source={imgs.bg} 
             style={ { width: Layout.window.width, height: Layout.window.height }}>
-          <KeyboardAwareScrollView>
+          <Content enableOnAndroid>
             <View style={{flexDirection: 'column', flex:1}}>
               <View style={{flex: 0.8,height: Layout.window.height-80,}}>
                 <View style={appStyles.row}>
@@ -87,7 +77,6 @@ class Register extends React.Component {
                 </View> 
 
                 <View style={styles.loginBox}>
-                  <Text transparent style={styles.formMsg}>{this.state.error}</Text>
                   <Form>
                       <Item style={styles.itemStyle} floatingLabel >
                         <Input
@@ -98,7 +87,7 @@ class Register extends React.Component {
                           style={appStyles.textbox}
                           maxLength={100}
                           numberOfLines={1}
-                          onChangeText={ (username)=> this.setState({username}) }
+                          onChangeText={ (name)=> this.setState({name}) }
                           spellCheck={false}
                           autoCorrect={false}
                         />
@@ -149,20 +138,20 @@ class Register extends React.Component {
                 </View>
               </View>  
               <View style={{flex: 0.2,height: 80,}}> 
-                { this.state.isLoading ? 
+                { this.props.isLoading ? 
                    <Spinner color={Colors.secondary} /> : 
                     <Button
                       full
                       primary
                       style={styles.button}
-                      onPress={() => this.onSubmit()}
+                      onPress={() => this.signup()}
                     >
                       <Text> Sign Up</Text>
                     </Button>
                 }
               </View>  
             </View>          
-          </KeyboardAwareScrollView>
+          </Content>
          </ImageBackground>
       </Container>
      
@@ -171,23 +160,15 @@ class Register extends React.Component {
 }
 // Map State To Props (Redux Store Passes State To Component)
 const mapStateToProps = (state) => {
-  console.log('State  1:', state);
-
-  // Redux Store --> Component
   return {
-    loggedIn: state.authReducer.loggedIn,
+    isLoading: state.common.isLoading,
   };
 };
 
-// Map Dispatch To Props (Dispatch Actions To Reducers. Reducers Then Modify The Data And Assign It To Your Props)
 const mapDispatchToProps = (dispatch) => {
   // Action
     return {
-      // Login
-      reduxLogin: (payload) => dispatch({
-        type: 'LOGGED_IN',
-        payload: payload,
-      }),
+      signup: (user) => dispatch(userActions.signup(user)),
    };
 };
 

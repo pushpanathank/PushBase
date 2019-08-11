@@ -1,13 +1,14 @@
 import _ from 'lodash';
 import storage from './storage';
 import axios from 'axios';
+import querystring from 'querystring';
 import apiConfig from '../config/api';
 
 import pathToRegExp from 'path-to-regexp';
 import { Platform } from 'react-native';
 
 axios.interceptors.request.use((config) => {
-  console.log(`Request [${ config.method }] ${ config.url }`, config);
+  // console.log(`Request [${ config.method }] ${ config.url }`, config);
   return config;
 });
 
@@ -30,7 +31,7 @@ const execute = async (path, method = 'GET', { params = {} , queries = {}, paylo
   }
 
   if ( ! headers['Content-Type']) {
-    headers['Content-Type'] = 'application/json';
+    headers['Content-Type'] = 'application/x-www-form-urlencoded';
   }
 
   if ( ! headers['Accept']) {
@@ -40,7 +41,7 @@ const execute = async (path, method = 'GET', { params = {} , queries = {}, paylo
   const options = { method, headers };
 
   if (method === 'POST' || method === 'PATCH') {
-    options.data = payloads;
+    options.data = querystring.stringify(payloads);
   }
 
   if (queries) {

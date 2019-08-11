@@ -47,7 +47,7 @@ const persistConfig = {
   storage: AsyncStorage,
   // Whitelist (Save Specific Reducers)
   whitelist: [
-    'authReducer', 'counterReducer',
+    'auth',
   ],
   // Blacklist (Don't Save Specific Reducers)
   blacklist: [

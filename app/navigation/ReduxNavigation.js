@@ -17,6 +17,7 @@ class ReduxNavigation extends React.Component {
   onBackPress = () => {
     const { nav, dispatch } = this.props;
     const idx = nav.routes[0].index || 0;
+    console.log("idx", idx);
     if (idx === 0) {
       return false;
     }

@@ -19,21 +19,17 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as userActions from "../../actions/user";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {showToast} from '../../utils/common';
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      username: 'push@gmail.com',
+      password: 'push',
       error: '',
     };
-  }
-
-  onSubmit(){
-    this.login();
   }
 
   onSignupButtonPressHandler(){
@@ -46,30 +42,23 @@ class Login extends React.Component {
 
   login(){
     const user = {
-      username: this.state.username,
+      email: this.state.username,
       password: this.state.password,
     }
-    this.setState({
-      isLoading: true,
-    })
-    this.props.authenticate(user)
+    this.props.signin(user)
       .then(res => {
         if(res.status == 200){
+          showToast(res.msg,"success");
           this.props.navigation.navigate('homeStack')
         }else{
-          this.setState({
-            isLoading: false,
-          })     
+          showToast(res.msg,"danger");
         }
       })
       .catch(error => {
         const messages = _.get(error, 'response.data.error')
         message = (_.values(messages) || []).join(',')
         if (message){
-         this.setState({
-           error: message,
-           isLoading: false,
-         })
+         showToast(message,"danger");
        }
        console.log(`
           Error messages returned from server:`, messages )
@@ -82,7 +71,7 @@ class Login extends React.Component {
         <ImageBackground 
             source={imgs.bg} 
             style={ { width: Layout.window.width, height: Layout.window.height }}>
-          <KeyboardAwareScrollView>
+          <Content enableOnAndroid>
             <View style={{flexDirection: 'column', flex:1}}>
               <View style={{flex: 0.8,height: Layout.window.height-80,}}>
                 <View style={appStyles.rowXcenter}>
@@ -105,6 +94,7 @@ class Login extends React.Component {
                           onChangeText={ (username)=> this.setState({username}) }
                           spellCheck={false}
                           autoCorrect={false}
+                          value={this.state.username}
                         />
                       </Item>
                       <Item style={styles.itemStyle} floatingLabel >
@@ -119,6 +109,7 @@ class Login extends React.Component {
                           onChangeText={ (password)=> this.setState({password}) }
                           spellCheck={false}
                           autoCorrect={false}
+                          value={this.state.password}
                         />
                       </Item>
                   </Form>
@@ -126,7 +117,7 @@ class Login extends React.Component {
                     <Col>
                       <Button transparent full  
                         onPress={() => this.onSignupButtonPressHandler()}
-                        style={{justifyContent:'flex-start'}}
+                        style={[styles.linkTextBtn,{justifyContent:'flex-start'}]}
                       >
                         <Text style={[styles.linkText,appStyles.textLeft]} > Create Account </Text>
                       </Button> 
@@ -134,7 +125,7 @@ class Login extends React.Component {
                     <Col>
                       <Button transparent full  
                         onPress={() => this.onForgotpasswordPressHandler()}
-                        style={{justifyContent:'flex-end'}}
+                        style={[styles.linkTextBtn,{justifyContent:'flex-end'}]}
                       >
                         <Text style={[styles.linkText,appStyles.textRight]} > Forgot Password </Text>
                       </Button>
@@ -143,20 +134,20 @@ class Login extends React.Component {
                 </View>
               </View>  
               <View style={{flex: 0.2,height: 80,}}> 
-                { this.state.isLoading ? 
+                { this.props.isLoading ? 
                    <Spinner color={Colors.secondary} /> : 
                     <Button
                       full
                       primary
                       style={styles.button}
-                      onPress={() => this.onSubmit()}
+                      onPress={() => this.login()}
                     >
                       <Text> Log in</Text>
                     </Button>
                 }
               </View>  
             </View>          
-          </KeyboardAwareScrollView>
+          </Content>
          </ImageBackground>
       </Container>
      
@@ -165,11 +156,9 @@ class Login extends React.Component {
 }
 // Map State To Props (Redux Store Passes State To Component)
 const mapStateToProps = (state) => {
-  console.log('State  1:', state);
-
   // Redux Store --> Component
   return {
-    loggedIn: state.authReducer.loggedIn,
+    isLoading: state.common.isLoading,
   };
 };
 
@@ -178,10 +167,7 @@ const mapDispatchToProps = (dispatch) => {
   // Action
     return {
       // Login
-      reduxLogin: (payload) => dispatch({
-        type: 'LOGGED_IN',
-        payload: payload,
-      }),
+      signin: (user) => dispatch(userActions.signin(user)),
    };
 };
 

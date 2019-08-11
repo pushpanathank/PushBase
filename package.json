@@ -13,6 +13,7 @@
     "expo-constants": "^6.0.0",
     "expo-font": "^6.0.1",
     "native-base": "^2.13.4",
+    "querystring": "^0.2.0",
     "react": "16.8.3",
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",

@@ -12,7 +12,7 @@ import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';*/
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 
-import { StyleProvider } from 'native-base';
+import { StyleProvider, Root } from 'native-base';
 import getTheme from './app/theme/components';
 import material from './app/theme/variables/material';
 
@@ -72,7 +72,9 @@ export default class App extends React.Component {
           persistor={persistor}
         >
           <StyleProvider style={getTheme(material)}>
-            <ReduxNavigation />
+            <Root>
+              <ReduxNavigation />
+            </Root>
           </StyleProvider>
         </PersistGate>
       </Provider>

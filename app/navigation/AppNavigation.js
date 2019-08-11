@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, Animated, Easing } from 'react-native'
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
 
-import { Login, Register, Forgotpassword, Home } from "../containers";
+import { Login, Register, Forgotpassword, Authenticate, Home } from "../containers";
 
 // https://github.com/react-community/react-navigation/issues/1254
 const noTransitionConfig = () => ({
@@ -33,11 +33,14 @@ const DrawerNavigation = createStackNavigator({
 
 // login stack
 const LoginStack = createStackNavigator({
+  authenticateScreen: { screen: Authenticate },
   signinScreen: { screen: Login },
-  // authenticateScreen: { screen: Authenticate },
-  forgotpasswordScreen: { screen: Forgotpassword },
   signupScreen: { screen: Register},
-}, {headerMode: 'none'})
+  forgotpasswordScreen: { screen: Forgotpassword },
+}, {
+  headerMode: 'none',
+  initialRouteName: 'authenticateScreen',
+})
 
 // Manifest of possible screens
 const PrimaryNav = createStackNavigator({
@@ -45,7 +48,7 @@ const PrimaryNav = createStackNavigator({
   homeStack: { screen: DrawerNavigation }
 }, {
   headerMode: 'none',
-  title: 'PocketRent',
+  title: 'PushBase',
   initialRouteName: 'loginStack',
   // transitionConfig: noTransitionConfig
 })
