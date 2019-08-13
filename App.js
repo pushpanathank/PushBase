@@ -10,7 +10,7 @@ import { Font, AppLoading } from 'expo';
 /*import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';*/
-import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { FontAwesome, Ionicons, AntDesign } from '@expo/vector-icons';
 
 import { StyleProvider, Root } from 'native-base';
 import getTheme from './app/theme/components';
@@ -50,6 +50,8 @@ export default class App extends React.Component {
     await Font.loadAsync({
       // 'Ionicons': require('native-base/Fonts/Ionicons.ttf'),
       ...Ionicons.font,
+      ...FontAwesome.font,
+      ...AntDesign.font,
       'Font-Light': require('./app/assets/fonts/Montserrat-Light.ttf'),
       'Font-Regular': require('./app/assets/fonts/Montserrat-Regular.ttf'),
       'Font-Semibold': require('./app/assets/fonts/Montserrat-SemiBold.ttf'),

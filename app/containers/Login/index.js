@@ -32,6 +32,12 @@ class Login extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if(this.props.user!=null){
+      this.props.navigation.navigate('homeStack');
+    }
+  }
+
   onSignupButtonPressHandler(){
     this.props.navigation.navigate('signupScreen')
   }
@@ -66,92 +72,113 @@ class Login extends React.Component {
   }
 
   render(){
-    return (
-      <Container style={appStyles.container}>
-        <ImageBackground 
-            source={imgs.bg} 
-            style={ { width: Layout.window.width, height: Layout.window.height }}>
-          <Content enableOnAndroid>
-            <View style={{flexDirection: 'column', flex:1}}>
-              <View style={{flex: 0.8,height: Layout.window.height-80,}}>
-                <View style={appStyles.rowXcenter}>
-                  <Logo style={appStyles.loginLogo} />
-                  <Text style={appStyles.loginMidText}>Login to Get Started!</Text>
-                </View> 
+    if(this.props.user==null){
+      return (
+        <Container style={appStyles.container}>
+          <ImageBackground 
+              source={imgs.bg} 
+              style={ { width: Layout.window.width, height: Layout.window.height }}>
+            <Content enableOnAndroid>
+              <View style={{flexDirection: 'column', flex:1}}>
+                <View style={{flex: 0.8,height: Layout.window.height-80,}}>
+                  <View style={appStyles.rowXcenter}>
+                    <Logo style={appStyles.loginLogo} />
+                    <Text style={appStyles.loginMidText}>Login to Get Started!</Text>
+                  </View> 
 
-                <View style={styles.loginBox}>
-                  <Text transparent style={styles.formMsg}>{this.state.error}</Text>
-                  <Form>
-                      <Item style={styles.itemStyle} floatingLabel >
-                        <Input
-                          placeholder="Email"
-                          placeholderTextColor="#FFFFFF"
-                          keyboardType={'email-address'}
-                          autoCapitalize="none"
-                          style={appStyles.textbox}
-                          maxLength={100}
-                          numberOfLines={1}
-                          onChangeText={ (username)=> this.setState({username}) }
-                          spellCheck={false}
-                          autoCorrect={false}
-                          value={this.state.username}
-                        />
-                      </Item>
-                      <Item style={styles.itemStyle} floatingLabel >
-                        <Input
-                          placeholder="Password"
-                          placeholderTextColor="#FFFFFF"
-                          autoCapitalize="none"
-                          style={appStyles.textbox}
-                          maxLength={30}
-                          numberOfLines={1}
-                          secureTextEntry={true}
-                          onChangeText={ (password)=> this.setState({password}) }
-                          spellCheck={false}
-                          autoCorrect={false}
-                          value={this.state.password}
-                        />
-                      </Item>
-                  </Form>
-                  <Row>
-                    <Col>
-                      <Button transparent full  
-                        onPress={() => this.onSignupButtonPressHandler()}
-                        style={[styles.linkTextBtn,{justifyContent:'flex-start'}]}
+                  <View style={styles.loginBox}>
+                    <Text transparent style={styles.formMsg}>{this.state.error}</Text>
+                    <Form>
+                        <Item style={styles.itemStyle} floatingLabel >
+                          <Input
+                            placeholder="Email"
+                            placeholderTextColor="#FFFFFF"
+                            keyboardType={'email-address'}
+                            autoCapitalize="none"
+                            style={appStyles.textbox}
+                            maxLength={100}
+                            numberOfLines={1}
+                            onChangeText={ (username)=> this.setState({username}) }
+                            spellCheck={false}
+                            autoCorrect={false}
+                            value={this.state.username}
+                          />
+                        </Item>
+                        <Item style={styles.itemStyle} floatingLabel >
+                          <Input
+                            placeholder="Password"
+                            placeholderTextColor="#FFFFFF"
+                            autoCapitalize="none"
+                            style={appStyles.textbox}
+                            maxLength={30}
+                            numberOfLines={1}
+                            secureTextEntry={true}
+                            onChangeText={ (password)=> this.setState({password}) }
+                            spellCheck={false}
+                            autoCorrect={false}
+                            value={this.state.password}
+                          />
+                        </Item>
+                    </Form>
+                    <Row>
+                      <Col>
+                        <Button transparent full  
+                          onPress={() => this.onSignupButtonPressHandler()}
+                          style={[styles.linkTextBtn,{justifyContent:'flex-start'}]}
+                        >
+                          <Text style={[styles.linkText,appStyles.textLeft]} > Create Account </Text>
+                        </Button> 
+                      </Col>
+                      <Col>
+                        <Button transparent full  
+                          onPress={() => this.onForgotpasswordPressHandler()}
+                          style={[styles.linkTextBtn,{justifyContent:'flex-end'}]}
+                        >
+                          <Text style={[styles.linkText,appStyles.textRight]} > Forgot Password </Text>
+                        </Button>
+                      </Col>
+                    </Row>
+                  </View>
+                </View>  
+                <View style={{flex: 0.2,height: 80,}}> 
+                  { this.props.isLoading ? 
+                     <Spinner color={Colors.secondary} /> : 
+                      <Button
+                        full
+                        primary
+                        style={appStyles.btnSecontary}
+                        onPress={() => this.login()}
                       >
-                        <Text style={[styles.linkText,appStyles.textLeft]} > Create Account </Text>
-                      </Button> 
-                    </Col>
-                    <Col>
-                      <Button transparent full  
-                        onPress={() => this.onForgotpasswordPressHandler()}
-                        style={[styles.linkTextBtn,{justifyContent:'flex-end'}]}
-                      >
-                        <Text style={[styles.linkText,appStyles.textRight]} > Forgot Password </Text>
+                        <Text> Log in</Text>
                       </Button>
-                    </Col>
-                  </Row>
-                </View>
+                  }
+                </View>  
+              </View>          
+            </Content>
+           </ImageBackground>
+        </Container>
+       
+      );
+    }else{
+      return (
+        <Container style={appStyles.container}>
+          <ImageBackground 
+              source={imgs.bg} 
+              style={ { width: Layout.window.width, height: Layout.window.height }}>
+            <Content enableOnAndroid>
+              <View style={{flexDirection: 'column', flex:1}}>
+                <View style={{flex: 1,height: Layout.window.height,}}>
+                  <View style={appStyles.rowXcenter}>
+                    <Logo style={[appStyles.loginLogo,{paddingTop:Layout.sixIndent}]} />
+                    <Spinner color={Colors.secondary} />
+                  </View> 
+                </View>  
               </View>  
-              <View style={{flex: 0.2,height: 80,}}> 
-                { this.props.isLoading ? 
-                   <Spinner color={Colors.secondary} /> : 
-                    <Button
-                      full
-                      primary
-                      style={styles.button}
-                      onPress={() => this.login()}
-                    >
-                      <Text> Log in</Text>
-                    </Button>
-                }
-              </View>  
-            </View>          
-          </Content>
-         </ImageBackground>
-      </Container>
-     
-    );
+            </Content>
+           </ImageBackground>
+        </Container>
+      );
+    }
   }
 }
 // Map State To Props (Redux Store Passes State To Component)
@@ -159,6 +186,7 @@ const mapStateToProps = (state) => {
   // Redux Store --> Component
   return {
     isLoading: state.common.isLoading,
+    user: state.auth.user,
   };
 };
 

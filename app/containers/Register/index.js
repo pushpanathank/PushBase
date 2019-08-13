@@ -143,7 +143,7 @@ class Register extends React.Component {
                     <Button
                       full
                       primary
-                      style={styles.button}
+                      style={appStyles.btnSecontary}
                       onPress={() => this.signup()}
                     >
                       <Text> Sign Up</Text>

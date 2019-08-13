@@ -28,6 +28,13 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  fontRegular:{
+    fontFamily: 'Font-Regular',
+  },
+  btnSecontary:{
+    backgroundColor: Colors.secondary,
+    fontFamily: 'Font-Regular',
+  },
   logo: {
     fontSize:25,
     color: Colors.white,
@@ -36,6 +43,7 @@ export default StyleSheet.create({
     fontSize:55,
     marginTop: Layout.sixIndent,
     marginBottom: Layout.indent,
+    fontFamily: 'Font-Regular',
   },
   loginMidText:{
     fontSize: 16,
@@ -48,7 +56,8 @@ export default StyleSheet.create({
     fontSize: 30,
     color:Colors.white,
     marginLeft: Layout.indent,
-    textAlign:'center'
+    textAlign:'center',
+    fontFamily: 'Font-Regular',
   },
   loginBack:{
     marginTop:Layout.doubleIndent,
@@ -62,6 +71,7 @@ export default StyleSheet.create({
     color: "#fff",
     width:100,
     paddingLeft:Layout.indent,
-    paddingRight:Layout.indent
+    paddingRight:Layout.indent,
+    fontFamily: 'Font-Regular',
   },
 });

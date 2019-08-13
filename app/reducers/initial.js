@@ -1,4 +1,8 @@
 export const initialState = {
-  user: null,
-  isLoading: false,
+	common:{
+		isLoading: false,
+	},
+	auth:{
+		user: null,
+	}
 };

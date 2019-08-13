@@ -2,45 +2,86 @@ import React from 'react'
 import { Text, Animated, Easing } from 'react-native'
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
 
-import { Login, Register, Forgotpassword, Authenticate, Home } from "../containers";
+import { Login, Register, Forgotpassword, Home, Drawer, Settings } from "../containers";
+import { Colors, DrawerConfig } from "../constants";
 
-// https://github.com/react-community/react-navigation/issues/1254
-const noTransitionConfig = () => ({
-  transitionSpec: {
-    duration: 0,
-    timing: Animated.timing,
-    easing: Easing.step0
-  }
-})
+const transitionConfig = () => ({
+      transitionSpec: {
+        duration: 300,
+        easing: Easing.out(Easing.poly(4)),
+        timing: Animated.timing,
+      },
+      screenInterpolator: sceneProps => {
+        const { layout, position, scene } = sceneProps;
+        const { index } = scene;
+
+        const height = layout.initHeight;
+        const width = layout.initWidth;
+        const translateY = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [height, 0, 0],
+        });
+        const translateX = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [width, 0, 0],
+        });
+
+        const opacity = position.interpolate({
+          inputRange: [index - 1, index - 0.99, index],
+          outputRange: [0, 1, 1],
+        });
+
+        return { opacity, transform: [{ translateY }] };
+      },
+    });
 
 // drawer stack
 const DrawerStack = createDrawerNavigator({
-  homeScreen: { screen: Home },
-  /*bookingScreen: { screen: BookingScreen},
-  settingsScreen: { screen: Settings},
-  aboutScreen: {screen: About},
-  contactScreen: {screen: Contact},
-  profileScreen: {screen: Profile},
-  markFinishedScreen: { screen: MarkFinished}*/
+  homeScreen: { 
+    navigationOptions: {
+      drawerIcon: DrawerConfig.home.icon,
+      drawerLabel: DrawerConfig.home.label
+    },
+    screen: Home 
+  },
+  settingScreen: { 
+    navigationOptions: {
+      drawerIcon: DrawerConfig.setting.icon,
+      drawerLabel: DrawerConfig.setting.label
+    },
+    screen: Settings 
+  },
 }, {
   gesturesEnabled: true,
-  // contentComponent: (props) => <DrawerContainer {...props} />
-})
+  // drawerBackgroundColor: 'rgba(255,255,255,.9)',
+  drawerType: 'front',
+  hideStatusBar: false,
+  statusBarAnimation: 'slide',
+  overlayColor: Colors.primaryDark,
+  contentOptions: {
+    activeTintColor: Colors.lightBlack,
+    activeBackgroundColor: Colors.primaryLight,
+  },
+  contentComponent: (props) => <Drawer {...props} />,
+});
 
 const DrawerNavigation = createStackNavigator({
   DrawerStack: { screen: DrawerStack }
-}, {headerMode: 'none'})
+}, {
+  headerMode: 'none',
+  transitionConfig: transitionConfig
+});
 
 // login stack
 const LoginStack = createStackNavigator({
-  authenticateScreen: { screen: Authenticate },
   signinScreen: { screen: Login },
   signupScreen: { screen: Register},
   forgotpasswordScreen: { screen: Forgotpassword },
 }, {
   headerMode: 'none',
-  initialRouteName: 'authenticateScreen',
-})
+  initialRouteName: 'signinScreen',
+  transitionConfig: transitionConfig
+});
 
 // Manifest of possible screens
 const PrimaryNav = createStackNavigator({
@@ -50,7 +91,6 @@ const PrimaryNav = createStackNavigator({
   headerMode: 'none',
   title: 'PushBase',
   initialRouteName: 'loginStack',
-  // transitionConfig: noTransitionConfig
-})
+});
 
 export default PrimaryNav

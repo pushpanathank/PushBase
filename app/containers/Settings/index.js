@@ -8,21 +8,23 @@ import {
   Container,
   Content,
   Icon,
-  Spinner
+  Spinner,
+  Button,
+  Text,
+  Header, Left, Body, Title, Right
 } from 'native-base';
 import { connect } from "react-redux";
+import * as userActions from "../../actions/user";
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
-class Authenticate extends React.Component {
+class Settings extends React.Component {
+
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    if(this.props.user==null){
-      this.props.navigation.navigate('signinScreen');
-    }else{
-      this.props.navigation.navigate('homeStack');
-    }
+  logout(){
+    this.props.logout();
+    this.props.navigation.navigate('loginStack')
   }
   render(){
     return (
@@ -30,15 +32,18 @@ class Authenticate extends React.Component {
         <ImageBackground 
             source={imgs.bg} 
             style={ { width: Layout.window.width, height: Layout.window.height }}>
+          <Header transparent>
+            <Left>
+              <Button transparent>
+                <Icon name='menu' onPress={() => this.props.navigation.openDrawer()}/>
+              </Button>
+            </Left>
+            <Body>
+              <Title>Settings</Title>
+            </Body>
+          </Header>
           <Content enableOnAndroid>
-            <View style={{flexDirection: 'column', flex:1}}>
-              <View style={{flex: 1,height: Layout.window.height,}}>
-                <View style={appStyles.rowXcenter}>
-                  <Logo style={[appStyles.loginLogo,{paddingTop:Layout.sixIndent}]} />
-                  <Spinner color={Colors.secondary} />
-                </View> 
-              </View>  
-            </View>  
+  
           </Content>
          </ImageBackground>
       </Container>
@@ -53,9 +58,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  // Action
-    return {};
+  return {
+      logout: () => dispatch(userActions.logoutUser()),
+   };
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(Authenticate);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
