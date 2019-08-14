@@ -22,10 +22,7 @@ class Settings extends React.Component {
   constructor(props) {
     super(props);
   }
-  logout(){
-    this.props.logout();
-    this.props.navigation.navigate('loginStack')
-  }
+  
   render(){
     return (
       <Container style={appStyles.container}>

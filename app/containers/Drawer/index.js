@@ -20,8 +20,9 @@ import { bindActionCreators } from "redux";
 import * as userActions from "../../actions/user";
 import imgs from '../../assets/images';
 import appStyles from '../../theme/appStyles';
+import { Screens } from '../../constants';
 import styles from './styles';
-import { getCurrentRoute } from '../../utils/common';
+// import { getCurrentRoute } from '../../utils/common';
 
 class Drawer extends React.Component {
   test() {
@@ -30,7 +31,7 @@ class Drawer extends React.Component {
 
   logout(){
     this.props.logout();
-    this.props.navigation.navigate('loginStack');
+    this.props.navigation.navigate(Screens.SignOutStack.route);
   }
   render() {
     const { navigation, user } = this.props;

@@ -3,7 +3,7 @@ import { Text, Animated, Easing } from 'react-native'
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
 
 import { Login, Register, Forgotpassword, Home, Drawer, Settings } from "../containers";
-import { Colors, DrawerConfig } from "../constants";
+import { Colors, Screens } from "../constants";
 
 const transitionConfig = () => ({
       transitionSpec: {
@@ -37,17 +37,17 @@ const transitionConfig = () => ({
 
 // drawer stack
 const DrawerStack = createDrawerNavigator({
-  homeScreen: { 
+  [Screens.Home.route]: { 
     navigationOptions: {
-      drawerIcon: DrawerConfig.home.icon,
-      drawerLabel: DrawerConfig.home.label
+      drawerIcon: Screens.Home.icon,
+      drawerLabel: Screens.Home.label
     },
     screen: Home 
   },
-  settingScreen: { 
+  [Screens.Settings.route]: { 
     navigationOptions: {
-      drawerIcon: DrawerConfig.setting.icon,
-      drawerLabel: DrawerConfig.setting.label
+      drawerIcon: Screens.Settings.icon,
+      drawerLabel: Screens.Settings.label
     },
     screen: Settings 
   },
@@ -62,11 +62,12 @@ const DrawerStack = createDrawerNavigator({
     activeTintColor: Colors.lightBlack,
     activeBackgroundColor: Colors.primaryLight,
   },
+  transitionConfig: transitionConfig,
   contentComponent: (props) => <Drawer {...props} />,
 });
 
 const DrawerNavigation = createStackNavigator({
-  DrawerStack: { screen: DrawerStack }
+  [Screens.DrawerStack.route]: { screen: DrawerStack }
 }, {
   headerMode: 'none',
   transitionConfig: transitionConfig
@@ -74,23 +75,23 @@ const DrawerNavigation = createStackNavigator({
 
 // login stack
 const LoginStack = createStackNavigator({
-  signinScreen: { screen: Login },
-  signupScreen: { screen: Register},
-  forgotpasswordScreen: { screen: Forgotpassword },
+  [Screens.SignIn.route]: { screen: Login },
+  [Screens.SignUp.route]: { screen: Register},
+  [Screens.ForgotPassword.route]: { screen: Forgotpassword },
 }, {
   headerMode: 'none',
-  initialRouteName: 'signinScreen',
+  initialRouteName: Screens.SignIn.route,
   transitionConfig: transitionConfig
 });
 
 // Manifest of possible screens
 const PrimaryNav = createStackNavigator({
-  loginStack: { screen: LoginStack },
-  homeStack: { screen: DrawerNavigation }
+  [Screens.SignOutStack.route]: { screen: LoginStack },
+  [Screens.SignInStack.route]: { screen: DrawerNavigation }
 }, {
   headerMode: 'none',
-  title: 'PushBase',
-  initialRouteName: 'loginStack',
+  title: Screens.Title,
+  initialRouteName: Screens.SignOutStack.route,
 });
 
 export default PrimaryNav

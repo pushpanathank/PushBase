@@ -66,6 +66,9 @@ export default StyleSheet.create({
   loginBackIcon:{
     color: Colors.white
   },
+  itemInput:{
+
+  },
   textbox:{
     marginTop:15,
     color: "#fff",

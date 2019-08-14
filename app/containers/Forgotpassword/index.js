@@ -32,48 +32,8 @@ class Forgotpassword extends React.Component {
     };
   }
 
-  onSubmit(){
-    this.login();
-  }
+  reset(){
 
-  onSigninButtonPressHandler(){
-    this.props.navigation.navigate('signinScreen')
-  }
-
-  onSignupButtonPressHandler(){
-    this.props.navigation.navigate('signupScreen')
-  }
-
-  login(){
-    const user = {
-      username: this.state.username,
-      password: this.state.password,
-    }
-    this.setState({
-      isLoading: true,
-    })
-    this.props.authenticate(user)
-      .then(res => {
-        if(res.status == 200){
-          this.props.navigation.navigate('homeStack')
-        }else{
-          this.setState({
-            isLoading: false,
-          })     
-        }
-      })
-      .catch(error => {
-        const messages = _.get(error, 'response.data.error')
-        message = (_.values(messages) || []).join(',')
-        if (message){
-         this.setState({
-           error: message,
-           isLoading: false,
-         })
-       }
-       console.log(`
-          Error messages returned from server:`, messages )
-      });
   }
 
   render(){
@@ -117,7 +77,7 @@ class Forgotpassword extends React.Component {
                       full
                       primary
                       style={appStyles.btnSecontary}
-                      onPress={() => this.onSubmit()}
+                      onPress={() => this.reset()}
                     >
                       <Text> Reset </Text>
                     </Button>
@@ -133,20 +93,14 @@ class Forgotpassword extends React.Component {
 }
 // Map State To Props (Redux Store Passes State To Component)
 const mapStateToProps = (state) => {
-  console.log('State  1:', state);
-
-  // Redux Store --> Component
   return {
     loggedIn: state.auth.loggedIn,
   };
 };
 
-// Map Dispatch To Props (Dispatch Actions To Reducers. Reducers Then Modify The Data And Assign It To Your Props)
 const mapDispatchToProps = (dispatch) => {
-  // Action
     return {
-      // Login
-      reduxLogin: (payload) => dispatch({
+      reset: (payload) => dispatch({
         type: 'LOGGED_IN',
         payload: payload,
       }),

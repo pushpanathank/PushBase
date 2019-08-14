@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, ImageBackground, Image} from 'react-native'
 import _ from 'lodash'; 
-import { Layout, Colors } from '../../constants';
+import { Layout, Colors, Screens } from '../../constants';
 import { Logo, Statusbar } from '../../components';
 import imgs from '../../assets/images';
 import {
@@ -22,6 +22,8 @@ import * as userActions from "../../actions/user";
 import {showToast} from '../../utils/common';
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
+import LoginForm from './form';
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -34,16 +36,16 @@ class Login extends React.Component {
 
   componentDidMount() {
     if(this.props.user!=null){
-      this.props.navigation.navigate('homeStack');
+      this.props.navigation.navigate(Screens.SignInStack.route);
     }
   }
 
   onSignupButtonPressHandler(){
-    this.props.navigation.navigate('signupScreen')
+    this.props.navigation.navigate(Screens.SignUp.route)
   }
 
   onForgotpasswordPressHandler(){
-    this.props.navigation.navigate('forgotpasswordScreen')
+    this.props.navigation.navigate(Screens.ForgotPassword.route)
   }
 
   login(){
@@ -55,7 +57,7 @@ class Login extends React.Component {
       .then(res => {
         if(res.status == 200){
           showToast(res.msg,"success");
-          this.props.navigation.navigate('homeStack')
+          this.props.navigation.navigate(Screens.SignInStack.route)
         }else{
           showToast(res.msg,"danger");
         }
@@ -88,38 +90,7 @@ class Login extends React.Component {
 
                   <View style={styles.loginBox}>
                     <Text transparent style={styles.formMsg}>{this.state.error}</Text>
-                    <Form>
-                        <Item style={styles.itemStyle} floatingLabel >
-                          <Input
-                            placeholder="Email"
-                            placeholderTextColor="#FFFFFF"
-                            keyboardType={'email-address'}
-                            autoCapitalize="none"
-                            style={appStyles.textbox}
-                            maxLength={100}
-                            numberOfLines={1}
-                            onChangeText={ (username)=> this.setState({username}) }
-                            spellCheck={false}
-                            autoCorrect={false}
-                            value={this.state.username}
-                          />
-                        </Item>
-                        <Item style={styles.itemStyle} floatingLabel >
-                          <Input
-                            placeholder="Password"
-                            placeholderTextColor="#FFFFFF"
-                            autoCapitalize="none"
-                            style={appStyles.textbox}
-                            maxLength={30}
-                            numberOfLines={1}
-                            secureTextEntry={true}
-                            onChangeText={ (password)=> this.setState({password}) }
-                            spellCheck={false}
-                            autoCorrect={false}
-                            value={this.state.password}
-                          />
-                        </Item>
-                    </Form>
+                    <LoginForm />
                     <Row>
                       <Col>
                         <Button transparent full  

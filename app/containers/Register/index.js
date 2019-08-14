@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, ImageBackground, Image} from 'react-native'
 import _ from 'lodash'; 
-import { Layout, Colors } from '../../constants';
+import { Layout, Colors, Screens } from '../../constants';
 import { Logo, Statusbar, LoginBackIcon } from '../../components';
 import imgs from '../../assets/images';
 import {
@@ -32,10 +32,6 @@ class Register extends React.Component {
     };
   }
 
-  onSigninButtonPressHandler(){
-    this.props.navigation.navigate('signinScreen')
-  }
-
   signup(){
     const user = {
       name: this.state.name,
@@ -46,7 +42,7 @@ class Register extends React.Component {
       .then(res => {
         if(res.status == 200){
           showToast(res.msg,"success");
-          this.props.navigation.navigate('signinScreen')
+          this.props.navigation.navigate(Screens.SignIn.route)
         }else{
           showToast(res.msg,"danger");
         }
