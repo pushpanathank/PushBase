@@ -19,7 +19,6 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as userActions from "../../actions/user";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
 class Forgotpassword extends React.Component {
