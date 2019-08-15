@@ -2,10 +2,8 @@ import axios from '../utils/api';
 import url from '../config/api';
 import apiConfig from '../config/api';
 import storage from '../utils/storage';
-import { ActionTypes } from '../constants/';
-
-// Action Creators
-const saveToken = (token) => storage.set('token' ,token);
+import { ActionTypes, Strings } from '../constants/';
+import { getLanguage } from '../utils/common';
 
 export const signin = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
@@ -15,7 +13,6 @@ export const signin = payloads => dispatch => {
     dispatch({ type: ActionTypes.LOADING, isLoading: false });
       if(res.status == 200){
         if(res.data.status==200){
-          saveToken(res.data.token);
           dispatch({ type: ActionTypes.SIGNIN, data: res.data.data.user });
         }
         return res.data
@@ -24,7 +21,6 @@ export const signin = payloads => dispatch => {
       }
     });
 }
-
 
 export const signup = payloads => dispatch => {
   dispatch({ type: ActionTypes.LOADING, isLoading: true });
@@ -44,47 +40,7 @@ export const logoutUser = () => dispatch => {
   
 }
 
-export const changeProfilePicture = payloads => dispatch => {
-  return axios.post('/v1/me/picture',  {payloads: { image_attributes: payloads}
-  }).then(res => {
-      if(res.status == 200){
-        saveToken(res.data.token);
-        dispatch({ type: ActionTypes.CHANGE_PROFILE, data: res.data })
-        return res
-      } else {
-        return res
-      }
-    })
-}
-
-export const initiateForgotpassword = payloads => dispatch => {
-  return axios.post('/v1//forgot-password',  {payloads: { user: payloads}
-  }).then(res => {
-    return res
-  })
-}
-
-export const fetchCurrentUser = payloads => dispatch => {
-  return axios.get('/v1/me',  {
-  }).then(res => {
-      if(res.status == 200){
-        saveToken(res.data.token);
-         dispatch({ type: ActionTypes.CURRENT_USER, data: res.data })
-        return res
-      } else {
-        return res
-      }
-    })
-}
-
-export const switchAvailability = availability => dispatch => {
-  return axios.post('/v1/switch-availability',  {payloads: { status: availability}
-  }).then(res => {
-      if(res.status == 200){
-        dispatch({ type: ActionTypes.USER_AVAILIBILITY_CHANGED, data: res.data })
-        return res
-      } else {
-        return res
-      }
-    })
+export const setLanguage = payloads => dispatch => {
+  dispatch({ type: ActionTypes.SHOWMODAL, showModal: false });
+  return dispatch({ type: ActionTypes.LANGUAGECODE, language: getLanguage(payloads.id), languageId: payloads.id ,languageSet: payloads.set });
 }

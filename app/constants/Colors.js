@@ -9,4 +9,5 @@ export default {
   lightWhite:'#dfdfdf',
   black:'#000000',
   lightBlack:'#333333',
+  red:'#ee0701',
 };

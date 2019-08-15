@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image} from 'react-native'
+import { StyleSheet, View, ImageBackground, TouchableWithoutFeedback} from 'react-native'
 import _ from 'lodash'; 
-import { Layout, Colors, Screens } from '../../constants';
-import { Logo, Statusbar } from '../../components';
+import { NavigationActions } from 'react-navigation';
+import { Layout, Colors, Screens, ActionTypes } from '../../constants';
+import { Logo, Statusbar, ModalBox, SetLanguage } from '../../components';
 import imgs from '../../assets/images';
 import {
   Container,
@@ -17,20 +18,18 @@ import {
   Spinner, Row, Col
 } from 'native-base';
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { submit } from 'redux-form';
 import * as userActions from "../../actions/user";
-import {showToast} from '../../utils/common';
+import { showToast } from '../../utils/common';
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
-import LoginForm from './form';
+import SignInForm from './form';
 
-class Login extends React.Component {
+class SignIn extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      username: 'push@gmail.com',
-      password: 'push',
-      error: '',
+    this.state = { 
+      visibleModal: false,
     };
   }
 
@@ -38,6 +37,11 @@ class Login extends React.Component {
     if(this.props.user!=null){
       this.props.navigation.navigate(Screens.SignInStack.route);
     }
+    setTimeout(()=>{
+      if(this.props.languageSet==0){
+        this.props.showModal();
+      }
+    },2000);
   }
 
   onSignupButtonPressHandler(){
@@ -48,16 +52,13 @@ class Login extends React.Component {
     this.props.navigation.navigate(Screens.ForgotPassword.route)
   }
 
-  login(){
-    const user = {
-      email: this.state.username,
-      password: this.state.password,
-    }
-    this.props.signin(user)
+  signin(values, dispatch, props){
+    dispatch(userActions.signin(values))
       .then(res => {
         if(res.status == 200){
           showToast(res.msg,"success");
-          this.props.navigation.navigate(Screens.SignInStack.route)
+          dispatch(NavigationActions.navigate({ routeName: Screens.SignInStack.route }));
+          // this.props.navigation.navigate(Screens.SignInStack.route)
         }else{
           showToast(res.msg,"danger");
         }
@@ -85,19 +86,20 @@ class Login extends React.Component {
                 <View style={{flex: 0.8,height: Layout.window.height-80,}}>
                   <View style={appStyles.rowXcenter}>
                     <Logo style={appStyles.loginLogo} />
-                    <Text style={appStyles.loginMidText}>Login to Get Started!</Text>
+                    <TouchableWithoutFeedback onPress={() => this.props.showModal()}>
+                      <Text style={appStyles.loginMidText}>{this.props.language.signinTitle}</Text>
+                    </TouchableWithoutFeedback >
                   </View> 
 
                   <View style={styles.loginBox}>
-                    <Text transparent style={styles.formMsg}>{this.state.error}</Text>
-                    <LoginForm />
+                    <SignInForm onSubmit={this.signin} />
                     <Row>
                       <Col>
                         <Button transparent full  
                           onPress={() => this.onSignupButtonPressHandler()}
                           style={[styles.linkTextBtn,{justifyContent:'flex-start'}]}
                         >
-                          <Text style={[styles.linkText,appStyles.textLeft]} > Create Account </Text>
+                          <Text style={[styles.linkText,appStyles.textLeft]} > {this.props.language.createAcc} </Text>
                         </Button> 
                       </Col>
                       <Col>
@@ -105,7 +107,7 @@ class Login extends React.Component {
                           onPress={() => this.onForgotpasswordPressHandler()}
                           style={[styles.linkTextBtn,{justifyContent:'flex-end'}]}
                         >
-                          <Text style={[styles.linkText,appStyles.textRight]} > Forgot Password </Text>
+                          <Text style={[styles.linkText,appStyles.textRight]} > {this.props.language.forgot} </Text>
                         </Button>
                       </Col>
                     </Row>
@@ -118,13 +120,19 @@ class Login extends React.Component {
                         full
                         primary
                         style={appStyles.btnSecontary}
-                        onPress={() => this.login()}
+                        onPress={() => this.props.pressSignin()}
                       >
-                        <Text> Log in</Text>
+                        <Text> {this.props.language.signin} </Text>
                       </Button>
                   }
                 </View>  
-              </View>          
+              </View>
+              <ModalBox 
+                visibleModal={this.state.visibleModal}
+                content={<SetLanguage />} 
+                style={appStyles.bottomModal}
+                contentStyle={appStyles.setLanguage}
+                />         
             </Content>
            </ImageBackground>
         </Container>
@@ -158,6 +166,8 @@ const mapStateToProps = (state) => {
   return {
     isLoading: state.common.isLoading,
     user: state.auth.user,
+    language: state.auth.language,
+    languageSet: state.auth.languageSet || 0,
   };
 };
 
@@ -165,10 +175,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   // Action
     return {
-      // Login
-      signin: (user) => dispatch(userActions.signin(user)),
+      pressSignin: () => dispatch(submit('signinForm')),
+      setLanguage: () => dispatch(userActions.setLanguage({id:1,set:1})),
+      showModal: () => dispatch({ type: ActionTypes.SHOWMODAL, showModal: true })
    };
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

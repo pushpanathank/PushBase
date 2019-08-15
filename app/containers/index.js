@@ -1,8 +1,8 @@
-import Login from "./Login";
-import Register from "./Register";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 import Forgotpassword from "./Forgotpassword";
 import Drawer from "./Drawer";
 import Home from "./Home";
 import Settings from "./Settings";
 
-export { Login, Register, Forgotpassword, Drawer, Home, Settings };
+export { SignIn, SignUp, Forgotpassword, Drawer, Home, Settings };

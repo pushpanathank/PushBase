@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, Animated, Easing } from 'react-native'
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
 
-import { Login, Register, Forgotpassword, Home, Drawer, Settings } from "../containers";
+import { SignIn, SignUp, Forgotpassword, Home, Drawer, Settings } from "../containers";
 import { Colors, Screens } from "../constants";
 
 const transitionConfig = () => ({
@@ -75,8 +75,8 @@ const DrawerNavigation = createStackNavigator({
 
 // login stack
 const LoginStack = createStackNavigator({
-  [Screens.SignIn.route]: { screen: Login },
-  [Screens.SignUp.route]: { screen: Register},
+  [Screens.SignIn.route]: { screen: SignIn },
+  [Screens.SignUp.route]: { screen: SignUp},
   [Screens.ForgotPassword.route]: { screen: Forgotpassword },
 }, {
   headerMode: 'none',

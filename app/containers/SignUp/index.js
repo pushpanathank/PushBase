@@ -21,7 +21,9 @@ import * as userActions from "../../actions/user";
 import {showToast} from '../../utils/common';
 import appStyles from '../../theme/appStyles';
 import styles from './styles';
-class Register extends React.Component {
+import SignUpForm from './form';
+
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -169,4 +171,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // Exports
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

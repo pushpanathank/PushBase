@@ -35,12 +35,31 @@ export default StyleSheet.create({
     backgroundColor: Colors.secondary,
     fontFamily: 'Font-Regular',
   },
+
+  setLanguage: {
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    borderRadius:0
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  bottomModal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+
   logo: {
     fontSize:25,
     color: Colors.white,
   },
   loginLogo: {
-    fontSize:55,
+    fontSize:40,
     marginTop: Layout.sixIndent,
     marginBottom: Layout.indent,
     fontFamily: 'Font-Regular',
@@ -71,10 +90,15 @@ export default StyleSheet.create({
   },
   textbox:{
     marginTop:15,
-    color: "#fff",
+    color: Colors.white,
     width:100,
     paddingLeft:Layout.indent,
     paddingRight:Layout.indent,
     fontFamily: 'Font-Regular',
+    fontSize:14
   },
+  inputError:{
+    color: Colors.red,
+    top:20,
+  }
 });

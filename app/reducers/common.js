@@ -11,6 +11,12 @@ const common = (state = initialState.common, action) => {
         isLoading: action.isLoading,
       }
     }
+    case ActionTypes.SHOWMODAL: {
+      return {
+        ...state,
+        showModal: action.showModal,
+      }
+    }
 
     // Default
     default: {

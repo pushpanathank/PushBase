@@ -1,4 +1,6 @@
-import { Toast } from 'native-base';
+import React from 'react';
+import { Toast, Icon } from 'native-base';
+import { Strings } from '../constants';
 
 const showToast = (msg,type) => {
 	if(msg=='') return;
@@ -21,7 +23,17 @@ const getCurrentRoute = (state: Object) => {
   return findCurrentRoute(state.nav)
 }
 
+const getFontIcon = (name,style={},size=12,type='AntDesign') =>{
+	return <Icon name={name} fontSize={size} type={type} style={[{color:'#ffffff'},style]} />;
+}
+
+const getLanguage = (code) =>{
+	return Strings[code||0];
+}
+
 export {
+	getLanguage,
 	showToast,
-	getCurrentRoute
+	getCurrentRoute,
+	getFontIcon
 };

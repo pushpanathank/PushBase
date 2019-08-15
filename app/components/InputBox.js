@@ -1,7 +1,8 @@
 import React from "react";
 import { View } from "react-native";
-import { Item, Input, Text } from 'native-base';
+import { Item, Input, Text, Icon } from 'native-base';
 import { Layout, Colors } from '../constants';
+import { getFontIcon } from '../utils/common';
 
 import appStyles from '../theme/appStyles';
 
@@ -19,29 +20,38 @@ const InputBox = ({
   autoCorrect=false,
   secureTextEntry=false,
   style={},
+  labelType='regular',
+  icon='',
+  iconStyle={},
 }) => {
   let hasError= false;
-  if(error !== undefined){
+  let iconImg = getFontIcon(icon,iconStyle)||<Icon/>;
+  if(touched && error){
     hasError= true;
   }
-  return(
-    <Item style= {appStyles.itemInput} error= {hasError}>
-      <Input 
-        {...input}
-        placeholder={placeholder}
-        placeholderTextColor={placeholderTextColor}
-        keyboardType={keyboardType}
-        autoCapitalize={autoCapitalize}
-        style={[appStyles.textbox,style]}
-        maxLength={maxLength}
-        numberOfLines={numberOfLines}
-        spellCheck={spellCheck}
-        autoCorrect={autoCorrect}
-        secureTextEntry={secureTextEntry}
-        value={input.value}
-      />
-      {hasError ? <Text>{error}</Text> : <Text />}
-    </Item>
-    )
+  if(disabled){
+
+  }else{
+    return(
+      <Item style= {appStyles.itemInput} error= {hasError}>
+      {iconImg}
+        <Input 
+          {...input}
+          placeholder={placeholder}
+          placeholderTextColor={placeholderTextColor}
+          keyboardType={keyboardType}
+          autoCapitalize={autoCapitalize}
+          style={[appStyles.textbox,style]}
+          maxLength={maxLength}
+          numberOfLines={numberOfLines}
+          spellCheck={spellCheck}
+          autoCorrect={autoCorrect}
+          secureTextEntry={secureTextEntry}
+          value={input.value}
+        />
+        {hasError ? <Text style={appStyles.inputError}>{error}</Text> : <Text />}
+      </Item>
+      )
+  }
 }
 export default InputBox;

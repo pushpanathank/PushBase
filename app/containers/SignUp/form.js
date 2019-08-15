@@ -1,21 +1,26 @@
 import React from 'react';
+import _ from 'lodash';
 import { Field, reduxForm } from 'redux-form';
 import { View } from "react-native";
 import { connect } from "react-redux";
-import { Container, Item, Input, Header, Body, Content, Title, Button, Text } from 'native-base';
+import { Form, Item, Input, Title, Button, Text } from 'native-base';
 import { InputBox } from '../../components';
+import styles from './styles';
 
 const validate = values => {
   const error= {};
   error.email= '';
-  error.name= '';
+  error.password= '';
   var ema = values.email;
-  var nm = values.name;
+  var nm = values.password;
   if(values.email === undefined){
     ema = '';
   }
-  if(values.name === undefined){
+  if(values.password === undefined){
     nm = '';
+  }
+  if(ema == ''){
+    error.email= 'Required';
   }
   if(ema.length < 8 && ema !== ''){
     error.email= 'too short';
@@ -23,9 +28,11 @@ const validate = values => {
   if(!ema.includes('@') && ema !== ''){
     error.email= '@ not included';
   }
-
+  if(nm == ''){
+    error.password= 'Required';
+  }
   if(nm.length > 8){
-    error.name= 'max 8 characters';
+    error.password= 'max 8 characters';
   }
 return error;
 };
@@ -34,30 +41,29 @@ class LoginForm extends React.Component {
   constructor(props){
     super(props);
   }
-  onSubmit(values){
-    console.log("values", values);
-
-  }
   render(){
-     const { handleSubmit, reset } = this.props;
+    const { handleSubmit, onSubmit } = this.props;
     return (
-      <View padder>
+      <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
         <Field 
           name="email" 
           component={InputBox} 
           placeholder="Email"
           keyboardType={'email-address'}
+          icon='user'
+          iconStyle={{top:5,paddingLeft:15}}
+          value="push@gmail.com"
         />
         <Field 
-          name="name" 
+          name="password" 
           component={InputBox} 
           placeholder="Password"
           secureTextEntry={true}
+          icon='lock'
+          iconStyle={{top:5,paddingLeft:15}}
+          value="push"
         />
-        {/* <Button style= {{ margin: 10 }} block primary onPress= {handleSubmit(this.onSubmit)}>
-                <Text>Submit</Text>
-                </Button> */}
-      </View>
+      </Form>
     )
   }
 }
