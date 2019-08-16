@@ -43,26 +43,26 @@ class SignInForm extends React.Component {
     super(props);
   }
   render(){
-    const { handleSubmit, onSubmit } = this.props;
+    const { handleSubmit, onSubmit, language } = this.props;
     return (
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
         <Field 
           name="email" 
           component={InputBox} 
-          placeholder={this.props.language.email}
+          placeholder={language.email}
           keyboardType={'email-address'}
           icon='user'
           iconStyle={{top:5,paddingLeft:15}}
-          validate={[required({msg: "This is a required field"}), email()]}
+          validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
         />
         <Field 
           name="password" 
           component={InputBox} 
-          placeholder={this.props.language.password}
+          placeholder={language.password}
           secureTextEntry={true}
           icon='lock'
           iconStyle={{top:5,paddingLeft:15}}
-          validate={[required()]}
+          validate={[required({msg: `${language.password} ${language.required}`})]}
         />
       </Form>
     )

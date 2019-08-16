@@ -13,7 +13,10 @@ export default[
 		forgot: 'Forgot Password',
 		signin: 'Sign In',
 		signup: 'Sign Up',
-		reset: 'Reset'
+		reset: 'Reset',
+
+		required: 'is required',
+		notValid: 'is not valid',
 	},
 	{
 		id: 1,
@@ -29,6 +32,9 @@ export default[
 		forgot: 'கடவுச்சொல்லை மறந்துவிட்டீர்களா',
 		signin: 'உள்நுழை',
 		signup: 'பதிவு செய்',
-		reset: 'மீட்டமை'
+		reset: 'மீட்டமை',
+
+		required: 'தேவை',
+		notValid: 'சரியானது அல்ல',
 	}
 ];

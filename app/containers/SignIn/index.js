@@ -75,6 +75,7 @@ class SignIn extends React.Component {
   }
 
   render(){
+    const { language } = this.props;
     if(this.props.user==null){
       return (
         <Container style={appStyles.container}>
@@ -87,7 +88,7 @@ class SignIn extends React.Component {
                   <View style={appStyles.rowXcenter}>
                     <Logo style={appStyles.loginLogo} />
                     <TouchableWithoutFeedback onPress={() => this.props.showModal()}>
-                      <Text style={appStyles.loginMidText}>{this.props.language.signinTitle}</Text>
+                      <Text style={appStyles.loginMidText}>{language.signinTitle}</Text>
                     </TouchableWithoutFeedback >
                   </View> 
 
@@ -99,7 +100,7 @@ class SignIn extends React.Component {
                           onPress={() => this.onSignupButtonPressHandler()}
                           style={[styles.linkTextBtn,{justifyContent:'flex-start'}]}
                         >
-                          <Text style={[styles.linkText,appStyles.textLeft]} > {this.props.language.createAcc} </Text>
+                          <Text style={[styles.linkText,appStyles.textLeft]} > {language.createAcc} </Text>
                         </Button> 
                       </Col>
                       <Col>
@@ -107,7 +108,7 @@ class SignIn extends React.Component {
                           onPress={() => this.onForgotpasswordPressHandler()}
                           style={[styles.linkTextBtn,{justifyContent:'flex-end'}]}
                         >
-                          <Text style={[styles.linkText,appStyles.textRight]} > {this.props.language.forgot} </Text>
+                          <Text style={[styles.linkText,appStyles.textRight]} > {language.forgot} </Text>
                         </Button>
                       </Col>
                     </Row>
@@ -122,7 +123,7 @@ class SignIn extends React.Component {
                         style={appStyles.btnSecontary}
                         onPress={() => this.props.pressSignin()}
                       >
-                        <Text> {this.props.language.signin} </Text>
+                        <Text> {language.signin} </Text>
                       </Button>
                   }
                 </View>  
