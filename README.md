@@ -1,7 +1,7 @@
 # pushbase
 A simple react native starter/boilerplate developed using React native + Expo + React Navigation + Nativebase + Redux + Redux Thunk + Redux Persist + Redux Form + Redux Helpers
 
-![Alt text](https://github.com/pushpanathank/PushBase/blob/master/app/assets/screenshot/signin.png?raw=true "Signin")
+<img src="https://github.com/pushpanathank/PushBase/blob/master/app/assets/screenshot/signin.png" alt="Signin" width="100" />
 ![Alt text](https://github.com/pushpanathank/PushBase/blob/master/app/assets/screenshot/signup.png?raw=true "Signup")
 ![Alt text](https://github.com/pushpanathank/PushBase/blob/master/app/assets/screenshot/forgot.png?raw=true "Forgot")
 ![Alt text](https://github.com/pushpanathank/PushBase/blob/master/app/assets/screenshot/home.png?raw=true "Home")
