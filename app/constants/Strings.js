@@ -17,6 +17,8 @@ export default[
 
 		required: 'is required',
 		notValid: 'is not valid',
+		tooShort: 'Minimum {count, number} chars required',
+		doesntMatch: 'doesn\'t match',
 	},
 	{
 		id: 1,
@@ -36,5 +38,7 @@ export default[
 
 		required: 'தேவை',
 		notValid: 'சரியானது அல்ல',
+		tooShort: 'குறைந்தபட்சம் {count, number} எழுத்துகள் தேவை',
+		doesntMatch: 'பொருந்தவில்லை',
 	}
 ];

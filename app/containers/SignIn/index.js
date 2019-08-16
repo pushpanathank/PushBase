@@ -2,9 +2,6 @@ import React from 'react'
 import { StyleSheet, View, ImageBackground, TouchableWithoutFeedback} from 'react-native'
 import _ from 'lodash'; 
 import { NavigationActions } from 'react-navigation';
-import { Layout, Colors, Screens, ActionTypes } from '../../constants';
-import { Logo, Statusbar, ModalBox, SetLanguage } from '../../components';
-import imgs from '../../assets/images';
 import {
   Container,
   Content,
@@ -19,6 +16,10 @@ import {
 } from 'native-base';
 import { connect } from "react-redux";
 import { submit } from 'redux-form';
+
+import { Layout, Colors, Screens, ActionTypes } from '../../constants';
+import { Logo, Statusbar, ModalBox, SetLanguage } from '../../components';
+import imgs from '../../assets/images';
 import * as userActions from "../../actions/user";
 import { showToast } from '../../utils/common';
 import appStyles from '../../theme/appStyles';

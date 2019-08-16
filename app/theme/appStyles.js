@@ -100,5 +100,6 @@ export default StyleSheet.create({
   inputError:{
     color: Colors.red,
     top:20,
+    fontSize:12
   }
 });

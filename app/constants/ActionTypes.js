@@ -6,5 +6,6 @@ export default {
 	SIGNUP : 'SIGNUP',
 	SIGNIN : 'SIGNIN',
 	LOGOUT : 'LOGOUT',
+	FORGOTPASSWORD : 'FORGOTPASSWORD',
 
 };
