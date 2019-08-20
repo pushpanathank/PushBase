@@ -72,10 +72,17 @@ class SignUp extends React.Component {
               <View style={{flex: 0.8,height: Layout.window.height-80,}}>
                 <View style={appStyles.row}>
                   <LoginBackIcon props={this.props} /> 
-
+                  <Animatable.Text 
+                    animation="fadeInDown"
+                    style={appStyles.loginTitle}>{language.signup}</Animatable.Text>
                 </View> 
 
-
+                <Animatable.View 
+                  animation="fadeInUp"
+                  delay={500}
+                  style={styles.loginBox}>
+                  <SignUpForm onSubmit={this.signup} />
+                </Animatable.View>
               </View>  
               <Animatable.View 
                 animation="fadeIn"
