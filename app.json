@@ -22,7 +22,7 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*"
+      "app/assets/*"
     ],
     "android": {
       "package": "com.pushpanathan.pushbase"
