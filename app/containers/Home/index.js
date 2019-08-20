@@ -1,8 +1,8 @@
 import React from 'react'
 import { StyleSheet, View, ImageBackground, Image} from 'react-native'
 import _ from 'lodash'; 
-import { Layout, Colors } from '../../constants';
-import { Logo, Statusbar } from '../../components';
+import { Layout, Colors, Screens } from '../../constants';
+import { Logo, Svgicon, Headers } from '../../components';
 import imgs from '../../assets/images';
 import {
   Container,
@@ -27,18 +27,10 @@ class Home extends React.Component {
         <ImageBackground 
             source={imgs.bg} 
             style={ { width: Layout.window.width, height: Layout.window.height }}>
-          <Header transparent>
-            <Left>
-              <Button transparent>
-                <Icon name='menu' onPress={() => this.props.navigation.openDrawer()}/>
-              </Button>
-            </Left>
-            <Body>
-              <Title>Home</Title>
-            </Body>
-          </Header>
-          <Content enableOnAndroid>
-
+          <Headers {...this.props} />
+          <Content enableOnAndroid style={appStyles.content}>
+            <View style={appStyles.contentBg}>
+            </View>
           </Content>
          </ImageBackground>
       </Container>

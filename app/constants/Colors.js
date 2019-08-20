@@ -10,4 +10,6 @@ export default {
   black:'#000000',
   lightBlack:'#333333',
   red:'#ee0701',
+
+  icon: '#000000'
 };

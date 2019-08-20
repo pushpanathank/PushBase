@@ -38,17 +38,9 @@ const transitionConfig = () => ({
 // drawer stack
 const DrawerStack = createDrawerNavigator({
   [Screens.Home.route]: { 
-    navigationOptions: {
-      drawerIcon: Screens.Home.icon,
-      drawerLabel: Screens.Home.label
-    },
     screen: Home 
   },
   [Screens.Settings.route]: { 
-    navigationOptions: {
-      drawerIcon: Screens.Settings.icon,
-      drawerLabel: Screens.Settings.label
-    },
     screen: Settings 
   },
 }, {

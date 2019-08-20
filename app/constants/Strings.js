@@ -14,9 +14,25 @@ export default[
 		signin: 'Sign In',
 		signup: 'Sign Up',
 		reset: 'Reset',
+		logout: 'Logout',
 
+		home: 'Home',
+		categories: 'Categories',
+		settings: 'Settings',
+
+		// App intro sliders
+		slide1Title: 'SAMPLE TITLE 1',
+		slide1Text: 'This is sample description 1',
+		slide2Title: 'SAMPLE TITLE 2',
+		slide2Text: 'This is sample description 2',
+		slide3Title: 'SAMPLE TITLE 3',
+		slide3Text: 'This is sample description 3',
+
+		//Validation messages
 		required: 'is required',
 		notValid: 'is not valid',
+		tooShort: 'Minimum {count, number} chars required',
+		doesntMatch: 'doesn\'t match',
 	},
 	{
 		id: 1,
@@ -33,8 +49,24 @@ export default[
 		signin: 'உள்நுழை',
 		signup: 'பதிவு செய்',
 		reset: 'மீட்டமை',
+		logout: 'வெளியேறு',
 
+		home: 'முகப்பு',
+		categories: 'வகைகள்',
+		settings: 'அமைப்புகள்',
+
+		// App intro sliders
+		slide1Title: 'மாதிரி தலைப்பு 1',
+		slide1Text: 'இது மாதிரி விளக்கம் 1',
+		slide2Title: 'மாதிரி தலைப்பு 2',
+		slide2Text: 'இது மாதிரி விளக்கம் 2',
+		slide3Title: 'மாதிரி தலைப்பு 3',
+		slide3Text: 'இது மாதிரி விளக்கம் 3',
+
+		//Validation messages
 		required: 'தேவை',
 		notValid: 'சரியானது அல்ல',
+		tooShort: 'குறைந்தபட்சம் {count, number} எழுத்துகள் தேவை',
+		doesntMatch: 'பொருந்தவில்லை',
 	}
 ];

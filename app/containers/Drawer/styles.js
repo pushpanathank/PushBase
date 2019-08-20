@@ -1,11 +1,9 @@
 import {Colors,Layout} from '../../constants/';
 export default {
-  headerBg: {
+  header: {
     height: 140,
-    alignSelf: "stretch",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: Layout.doubleIndent
+    paddingTop: Layout.doubleIndent,
+    backgroundColor: Colors.primary
   },
   logoutFooter: {
     backgroundColor: Colors.secondary,
@@ -21,16 +19,5 @@ export default {
   },
   white:{
     color: Colors.white
-  },
-  profileIconContainer:{
-    justifyContent: 'center',
-    backgroundColor: Colors.white,
-    width:60,
-    height:60,
-    borderRadius:30,
-  },
-  profileIcon:{
-    color: Colors.primary,
-    marginLeft:15
   }
 };

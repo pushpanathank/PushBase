@@ -1,5 +1,6 @@
 import React from 'react'
 import { Icon } from 'native-base';
+import Strings from './Strings';
 
 export default {
   Title: 'PushBase',
@@ -11,13 +12,13 @@ export default {
   },
   Home : {
     route: 'Home',
-    icon:(<Icon fontSize='12' type='AntDesign' name='home' />),
-    label:"Home",
+    icon:'home',
+    label: Strings.home,
   },
   Settings : {
     route: 'Settings',
-    icon:(<Icon fontSize='12' type='AntDesign' name='setting' />),
-    label:"Settings",
+    icon:'settings',
+    label: Strings.settings,
   },
 
   SignOutStack : {

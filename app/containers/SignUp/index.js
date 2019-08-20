@@ -1,9 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, ImageBackground, Image} from 'react-native'
-import _ from 'lodash'; 
-import { Layout, Colors, Screens } from '../../constants';
-import { Logo, Statusbar, LoginBackIcon } from '../../components';
-import imgs from '../../assets/images';
+import _ from 'lodash';
+import { NavigationActions } from 'react-navigation';
 import {
   Container,
   Content,
@@ -16,7 +14,13 @@ import {
   Spinner, Row, Col, Toast
 } from 'native-base';
 import { connect } from "react-redux";
+import { submit } from 'redux-form';
 import { bindActionCreators } from "redux";
+import * as Animatable from 'react-native-animatable';
+
+import { Layout, Colors, Screens } from '../../constants';
+import { Logo, Statusbar, LoginBackIcon } from '../../components';
+import imgs from '../../assets/images';
 import * as userActions from "../../actions/user";
 import {showToast} from '../../utils/common';
 import appStyles from '../../theme/appStyles';
@@ -34,17 +38,13 @@ class SignUp extends React.Component {
     };
   }
 
-  signup(){
-    const user = {
-      name: this.state.name,
-      email: this.state.username,
-      password: this.state.password,
-    }
-    this.props.signup(user)
+  signup(values, dispatch, props){
+    dispatch(userActions.signup(values))
       .then(res => {
         if(res.status == 200){
           showToast(res.msg,"success");
-          this.props.navigation.navigate(Screens.SignIn.route)
+          dispatch(NavigationActions.navigate({ routeName: Screens.SignIn.route }));
+          // this.props.navigation.navigate(Screens.SignIn.route)
         }else{
           showToast(res.msg,"danger");
         }
@@ -61,6 +61,7 @@ class SignUp extends React.Component {
   }
 
   render(){
+    const { language } = this.props;
     return (
       <Container style={appStyles.container}>
         <ImageBackground 
@@ -71,83 +72,34 @@ class SignUp extends React.Component {
               <View style={{flex: 0.8,height: Layout.window.height-80,}}>
                 <View style={appStyles.row}>
                   <LoginBackIcon props={this.props} /> 
-                  <Text style={appStyles.loginTitle}>Sign Up</Text>
+                  <Animatable.Text 
+                    animation="fadeInDown"
+                    style={appStyles.loginTitle}>{language.signup}</Animatable.Text>
                 </View> 
 
-                <View style={styles.loginBox}>
-                  <Form>
-                      <Item style={styles.itemStyle} floatingLabel >
-                        <Input
-                          placeholder="Name"
-                          placeholderTextColor="#FFFFFF"
-                          keyboardType={'default'}
-                          autoCapitalize="none"
-                          style={appStyles.textbox}
-                          maxLength={100}
-                          numberOfLines={1}
-                          onChangeText={ (name)=> this.setState({name}) }
-                          spellCheck={false}
-                          autoCorrect={false}
-                        />
-                      </Item>
-                      <Item style={styles.itemStyle} floatingLabel >
-                        <Input
-                          placeholder="Email"
-                          placeholderTextColor="#FFFFFF"
-                          keyboardType={'email-address'}
-                          autoCapitalize="none"
-                          style={appStyles.textbox}
-                          maxLength={100}
-                          numberOfLines={1}
-                          onChangeText={ (username)=> this.setState({username}) }
-                          spellCheck={false}
-                          autoCorrect={false}
-                        />
-                      </Item>
-                      <Item style={styles.itemStyle} floatingLabel >
-                        <Input
-                          placeholder="Password"
-                          placeholderTextColor="#FFFFFF"
-                          autoCapitalize="none"
-                          style={appStyles.textbox}
-                          maxLength={30}
-                          numberOfLines={1}
-                          secureTextEntry={true}
-                          onChangeText={ (password)=> this.setState({password}) }
-                          spellCheck={false}
-                          autoCorrect={false}
-                        />
-                      </Item>
-                      <Item style={styles.itemStyle} floatingLabel >
-                        <Input
-                          placeholder="Confirm Password"
-                          placeholderTextColor="#FFFFFF"
-                          autoCapitalize="none"
-                          style={appStyles.textbox}
-                          maxLength={30}
-                          numberOfLines={1}
-                          secureTextEntry={true}
-                          onChangeText={ (password)=> this.setState({password}) }
-                          spellCheck={false}
-                          autoCorrect={false}
-                        />
-                      </Item>
-                  </Form>
-                </View>
+                <Animatable.View 
+                  animation="fadeInUp"
+                  delay={500}
+                  style={styles.loginBox}>
+                  <SignUpForm onSubmit={this.signup} />
+                </Animatable.View>
               </View>  
-              <View style={{flex: 0.2,height: 80,}}> 
+              <Animatable.View 
+                animation="fadeIn"
+                delay={1000}
+                style={{flex: 0.2,height: 80,}}> 
                 { this.props.isLoading ? 
                    <Spinner color={Colors.secondary} /> : 
                     <Button
                       full
                       primary
                       style={appStyles.btnSecontary}
-                      onPress={() => this.signup()}
+                      onPress={() => this.props.pressSignup()}
                     >
-                      <Text> Sign Up</Text>
+                      <Text>{language.signup}</Text>
                     </Button>
                 }
-              </View>  
+              </Animatable.View>  
             </View>          
           </Content>
          </ImageBackground>
@@ -160,12 +112,14 @@ class SignUp extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isLoading: state.common.isLoading,
+    language: state.auth.language,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   // Action
     return {
+      pressSignup: () => dispatch(submit('signupForm')),
       signup: (user) => dispatch(userActions.signup(user)),
    };
 };

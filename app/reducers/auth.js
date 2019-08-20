@@ -5,6 +5,9 @@ import { ActionTypes } from '../constants/';
 // Reducers (Modifies The State And Returns A New State)
 const auth = (state = initialState.auth, action) => {
   switch (action.type) {
+    case ActionTypes.RESETSTATE: {
+      return initialState.auth
+    }
     case ActionTypes.LANGUAGECODE: {
       return {
         ...state,
@@ -13,6 +16,13 @@ const auth = (state = initialState.auth, action) => {
         languageSet: action.languageSet,
       }
     }
+    case ActionTypes.SHOWINTRO: {
+      return {
+        ...state,
+        showIntro: action.showIntro,
+      }
+    }
+
     case ActionTypes.SIGNIN: {
       return {
         ...state,

@@ -4,64 +4,53 @@ import { Field, reduxForm } from 'redux-form';
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { Form, Item, Input, Title, Button, Text } from 'native-base';
+import { required, email, length, confirmation } from 'redux-form-validators'
 import { InputBox } from '../../components';
 import styles from './styles';
 
-const validate = values => {
-  const error= {};
-  error.email= '';
-  error.password= '';
-  var ema = values.email;
-  var nm = values.password;
-  if(values.email === undefined){
-    ema = '';
-  }
-  if(values.password === undefined){
-    nm = '';
-  }
-  if(ema == ''){
-    error.email= 'Required';
-  }
-  if(ema.length < 8 && ema !== ''){
-    error.email= 'too short';
-  }
-  if(!ema.includes('@') && ema !== ''){
-    error.email= '@ not included';
-  }
-  if(nm == ''){
-    error.password= 'Required';
-  }
-  if(nm.length > 8){
-    error.password= 'max 8 characters';
-  }
-return error;
-};
-
-class LoginForm extends React.Component {
+class SignUpForm extends React.Component {
   constructor(props){
     super(props);
   }
   render(){
-    const { handleSubmit, onSubmit } = this.props;
+    const { handleSubmit, onSubmit, language } = this.props;
     return (
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.loginForm}>
         <Field 
-          name="email" 
+          name="name" 
           component={InputBox} 
-          placeholder="Email"
-          keyboardType={'email-address'}
+          placeholder={language.name}
+          keyboardType={'default'}
           icon='user'
           iconStyle={{top:5,paddingLeft:15}}
-          value="push@gmail.com"
+          validate={[required({msg: `${language.name} ${language.required}`})]}
+        />
+        <Field 
+          name="email" 
+          component={InputBox} 
+          placeholder={language.email}
+          keyboardType={'email-address'}
+          icon='mail'
+          iconStyle={{top:5,paddingLeft:15}}
+          validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
         />
         <Field 
           name="password" 
           component={InputBox} 
-          placeholder="Password"
+          placeholder={language.password}
           secureTextEntry={true}
           icon='lock'
           iconStyle={{top:5,paddingLeft:15}}
-          value="push"
+          validate={[required({msg: `${language.password} ${language.required}`}),length({ minimum: 4,msg: `${language.tooShort}` })]}
+        />
+        <Field 
+          name="confirmpass" 
+          component={InputBox} 
+          placeholder={language.confirmPassword}
+          secureTextEntry={true}
+          icon='lock'
+          iconStyle={{top:5,paddingLeft:15}}
+          validate={[confirmation({ field: 'password', msg: `${language.password} ${language.doesntMatch}` })]}
         />
       </Form>
     )
@@ -69,17 +58,18 @@ class LoginForm extends React.Component {
 }
 
 
-const loginform = reduxForm({
-  form: 'loginForm',
-  validate
-})(LoginForm);
+const signupform = reduxForm({
+  form: 'signupForm',
+})(SignUpForm);
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    language: state.auth.language,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(loginform);
+export default connect(mapStateToProps, mapDispatchToProps)(signupform);

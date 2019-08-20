@@ -8,7 +8,7 @@ import { required, email } from 'redux-form-validators'
 import { InputBox } from '../../components';
 import styles from './styles';
 
-class SignInForm extends React.Component {
+class ForgotForm extends React.Component {
   constructor(props){
     super(props);
   }
@@ -25,24 +25,15 @@ class SignInForm extends React.Component {
           iconStyle={{top:5,paddingLeft:15}}
           validate={[required({msg: `${language.email} ${language.required}`}), email({msg: `${language.email} ${language.notValid}`})]}
         />
-        <Field 
-          name="password" 
-          component={InputBox} 
-          placeholder={language.password}
-          secureTextEntry={true}
-          icon='lock'
-          iconStyle={{top:5,paddingLeft:15}}
-          validate={[required({msg: `${language.password} ${language.required}`})]}
-        />
       </Form>
     )
   }
 }
 
 
-const signinform = reduxForm({
-  form: 'signinForm',
-})(SignInForm);
+const forgotform = reduxForm({
+  form: 'forgotForm',
+})(ForgotForm);
 
 const mapStateToProps = (state) => {
   return {
@@ -54,4 +45,4 @@ const mapDispatchToProps = (dispatch) => {
     return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(signinform);
+export default connect(mapStateToProps, mapDispatchToProps)(forgotform);
