@@ -13,7 +13,7 @@ Clone or download the repository and install the dependencies
 <pre> # Clone the repository
 git clone https://github.com/pushpanathank/PushBase.git
 
-# Go to PushBase
+# Go to the project location
 cd PushBase
 
 # Install dependecies
