@@ -49,7 +49,7 @@ Find Genymotion’s copy of adb. On macOS for example, this is normally /Applica
 Add the Genymotion tools directory to your path (instructions for Mac, Linux, and Windows).
 Make sure that you can run adb from your terminal.
 npm run eject
-This will start the process of "ejecting" from Create React Native App's build scripts. You'll be asked a couple of questions about how you'd like to build your project.
+This will start the process of "ejecting" from Create React Native App's build scripts. You will be asked a couple of questions about how you'd like to build your project.
 
 Warning: Running eject is a permanent action (aside from whatever version control system you use). An ejected app will require you to have an Xcode and/or Android Studio environment set up.
 
