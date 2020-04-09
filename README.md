@@ -1,3 +1,5 @@
+# Updated version is <a href="https://github.com/pushpanathank/react-native-starter">here</a>
+
 # React native + Expo startup 
 A simple react native starter/boilerplate developed using React native + Expo + React Navigation + Nativebase + Redux + Redux Thunk + Redux Persist + Redux Form + Redux Helpers
 
